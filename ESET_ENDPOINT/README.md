@@ -96,9 +96,17 @@ Non ci sono regole di discovery
 ## Elementi Componenti
 | Nome        |Descrizione| Tipo|Unità  | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
 | ------------- |:-------------|:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|
-|Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo delle minacce di ESET||Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`|
+|Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo delle minacce di ESET|Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`|
 |Numero Core Processore|Numero Core del processore per calcolare l'utilizzo CPU dei servizi|Agente Zabbix|Core|```wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"]```|Numero(senza segno)|1d|`Antivirus:ESET` `ESET:Componenti`|
 |RAM Totale Sistema|Memoria RAM in Mb totale del sistema per calcolare l'utilizzo della RAM|Agente Zabbix|Mb|```wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"]```|Numero(float)|1d|`Antivirus:ESET` `ESET:Componenti`|```Trim Destro -> "}]```<br><br>```Espressione Regolare -> ([^"/]+$) -> \0```<br><br>```Javascript -> return (value / 1024 / 1024)```|
+|Spazio Occupato Log ESET|Spazio totale occupato dalla cartella eScan di ESET|Agente Zabbix|Gb|```vfs.dir.size[C:\ProgramData\ESET\ESET Security\Logs\eScan,,,disk,]```|Numero(float)|1d|`Antivirus:ESET` `ESET:Componenti`|```Javascript -> return (value / 1024 / 1024)```|
+
+## Elementi Servizi
+| Nome        |Descrizione| Tipo|Unità  | Chiave  | Tipo di informazione  | Intervallo| Tag |Mappatura Valori|
+| ------------- |:-------------|:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|
+|Stato del servizio "ekrn" (ESET Service)|Stato del servizio|Agente Zabbix||```service.info["ekrn",state]```|Numero(float)|1m|`Antivirus:ESET` `ESET:Servizi`|Stato Servizi|
+|Stato del servizio "ekrnEpfw" (ESET Firewall Helper)|Stato del servizio|Agente Zabbix||```service.info["ekrnEpfw",state]```|Numero(float)|1m|`Antivirus:ESET` `ESET:Servizi`|Stato Servizi|
+|Stato del servizio "EraAgentSvc" (ESET Management Agent)|Stato del servizio|Agente Zabbix||```service.info["EraAgentSvc",state]```|Numero(float)|1m|`Antivirus:ESET` `ESET:Servizi`|Stato Servizi|
 
 ## Elementi Prestazioni
 Questi elementi sono tutti generati in WMI per avere un valore più veritiero possibile senza inficiare sulle performance.
