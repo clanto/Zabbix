@@ -1,5 +1,7 @@
 # Monitoraggio degli Endpoint ESET tramite Zabbix
 Il template permette di monitorare molte delle informazioni direttamente sugli Endpoint in modalità RMM Safe (solo lettura, senza scrittura).
+Ci sono 2 template, uno passivo ed uno attivo.
+Il template passivo è stato testato con e senza proxy.
 
 ## Abilitare RMM da console Protect o dai singoli Endpoint
 Per poter usufruire del template bisogna abilitare le opzioni di RMM sugli Endpoint tramite console Protect o sui singoli computer.
