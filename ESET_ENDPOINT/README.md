@@ -111,6 +111,8 @@ Non ci sono regole di discovery
 |{$RAM.WARNING}% della RAM totale|Calcolo della soglia di RAM in base al valore warning della macro|Agente Zabbix|Mb|```eset.warning.ram.space```|Numero(float)|1d|`Antivirus:ESET` `ESET:Componenti`||```({$RAM.WARNING}/100)*last(//wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"])```|
 
 ## Elementi Servizi
+![servizi](https://user-images.githubusercontent.com/44651109/165174338-9e5e2a87-b324-42a2-8470-6125d463e05a.PNG)
+
 | Nome        |Descrizione| Tipo|Unità  | Chiave  | Tipo di informazione  | Intervallo| Tag |Mappatura Valori|
 | ------------- |:-------------|:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|
 |Stato del servizio "ekrn" (ESET Service)|Stato del servizio|Agente Zabbix||```service.info["ekrn",state]```|Numero(float)|1m|`Antivirus:ESET` `ESET:Servizi`|Stato Servizi|
