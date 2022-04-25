@@ -129,10 +129,18 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Aggiornamenti ultimo eseguito con successo|Dependent Item|aggiornamento.riuscito|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`|```jSONPath -> $.result.last_successful_update_time```|
 |Aggiornamenti Ultimo Tentativo ESET|Dependent Item|aggiornamento.tentato|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`|```jSONPath -> $.result.last_update_time```|
 
-
 ## Elementi derivati dal log info endpoint
 | Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
 |:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
 |Info Prodotto Endpoint ESET|Dependent Item|prodotto.endpoint|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.description```|
 |Info Versione Endpoint ESET|Dependent Item|versione.endpoint|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.version```|
 |Info Lingua Endpoint ESET|Dependent Item|info.endpoint.lang|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.lang_id```<br><br>```Sostituisci -> 1040 -> Italiano```|
+
+## Elementi derivati dal log licenza
+| Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
+|:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
+|Licenza ESET Tipo|Dependent Item|ESET.licenza.tipo|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.type```<br><br>```Sostituisci -> PAID -> A Pagamento```|
+|Licenza ESET Stato|Dependent Item|ESET.licenza.stato|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.version```|
+|Licenza ESET Nome Postazione|Dependent Item|ESET.licenza.seatname|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.seat_name```|
+|Licenza ESET ID Pubblico|Dependent Item|ESET.licenza.publicID|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.public_id```|
+|Licenza ESET ID Postazione|Dependent Item|ESET.licenza.seatID|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.seat_id```|
