@@ -21,8 +21,8 @@ Qui bisogna:
 - Percorsi Applicazione impostiamo il percorso della cartella delle applicazioni di Zabbix "C:\Program Files\Zabbix Agent\*"
 
 ## Funzionamento
-Il template utilizza di base 4 elementi con cui recupera i log dall' Endpoint per creare tutti gli elementi ed i Trigger.
-I log sono impostati per essere recuperati ogni 10 secondi così da dare uno stato del software quasi in tempo reale.
+Il template dei log utilizza 4 elementi con cui recupera i log dall' Endpoint per creare tutti gli elementi ed i Trigger.
+I log sulle minacce sono impostati per essere recuperati ogni 10 secondi così da dare uno stato del software quasi in tempo reale.
 Per una lista dei comandi RMM utilizzati:
 https://help.eset.com/eea/7/en-US/rmm_json_commands_application.html?rmm_json_commands.html
 Oltre ai log il template controlla i processi di ESET, il loro stato e salva l'utilizzo di CPU, RAM e Disco tramite WMI dei singoli servizi.
@@ -179,3 +179,4 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Licenza ESET EDTD ID Postazione|Dependent Item|ESET.licenza.edtd.seatid|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.seat_id```|
 
 ## Elementi derivati dal log minacce
+|Minaccia Rilevamento|Dependent Item|ESET.Rilevamento|`Log Minacce ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:Minaccia`|```jSONPath -> $.result.virlog.display_name```<br><br>```Espressione Regolare -> Rilevamenti -> Minaccia Rilevata```<br><br>Custom fail Set value to `Nessuna Minaccia`|
