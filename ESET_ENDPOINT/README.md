@@ -128,3 +128,11 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Aggiornamenti Risultato ultimo tentativo|Dependent Item|aggiornamento.risultato|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`|```jSONPath -> $.result.last_update_result```|
 |Aggiornamenti ultimo eseguito con successo|Dependent Item|aggiornamento.riuscito|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`|```jSONPath -> $.result.last_successful_update_time```|
 |Aggiornamenti Ultimo Tentativo ESET|Dependent Item|aggiornamento.tentato|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`|```jSONPath -> $.result.last_update_time```|
+
+
+## Elementi derivati dal log info endpoint
+| Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
+|:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
+|Info Prodotto Endpoint ESET|Dependent Item|prodotto.endpoint|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.description```|
+|Info Versione Endpoint ESET|Dependent Item|versione.endpoint|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.version```|
+|Info Lingua Endpoint ESET|Dependent Item|info.endpoint.lang|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.lang_id```<br><br>```Sostituisci -> 1040 -> Italiano```|
