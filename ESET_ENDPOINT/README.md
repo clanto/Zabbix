@@ -102,7 +102,7 @@ Non ci sono regole di discovery
 Questi elementi sono tutti generati in WMI per avere un valore più veritiero possibile senza inficiare sulle performance
 | Nome        |Descrizione| Tipo           | Chiave  | Tipo di informazione  |Unità| Intervallo| Tag | Preprocesso|
 | ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|:-----|
-|I/O Lettura (ESET Management Agent)|Valori in Mb\s di lettura del disco per il servizio|Agente Zabbix|```wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ERAAgent%'"]```|Numerico(float)|Mb\s|1m|`Antivirus:ESET` `ESET:Prestazioni`|
+|I/O Lettura (ESET Management Agent)|Valori in Mb\s di lettura del disco per il servizio|Agente Zabbix|```wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ERAAgent%'"]```|Numerico(float)|Mb\s|1m|`Antivirus:ESET` `ESET:Prestazioni`|```Trim Sinistro -> [{"IOReadOperationsPersec":"```<br>```Trim Destro -> ","Name":"ERAAgent"}]```<br>```Javascript -> return (value / 1024 / 1024)```|
 
 ## Elementi Principali Log
 | Nome        | Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
