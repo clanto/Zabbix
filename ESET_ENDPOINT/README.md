@@ -3,6 +3,14 @@ Il template permette di monitorare molte delle informazioni direttamente sugli E
 Ci sono 2 template, uno passivo ed uno attivo.
 Il template passivo è stato testato con e senza proxy.
 
+## Cosa permette di leggere il template
+- Stato dei servizi e dei processi con alert
+- Utilizzo di CPU, RAM e disco in lettura e scrittura per ogni processo con alert
+- Stato e informazioni aggiornamenti
+- Informazioni sulla licenza principale e sulla licenza EDTD
+- Informazioni dettagliate sulla minaccia appena trovata sul computer (nome, percorso, utente, azione eseguita ecc.)
+- Informazioni varie sul software installato e sulla dimensione dei log
+
 ## Abilitare RMM da console Protect o dai singoli Endpoint
 Per poter usufruire del template bisogna abilitare le opzioni di RMM sugli Endpoint tramite console Protect o sui singoli computer.
 Per farlo basta andare su Configurazione Avanzata -> Strumenti -> ESET RMM.
