@@ -105,4 +105,4 @@ Non ci sono regole di discovery
 ## Elementi derivati dal log aggiornamenti
 | Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
 |:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
-|Aggiornamenti Risultato ultimo tentativo|Dependent Item|aggiornamento.risultato|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`| Preprocesso|```jSONPath -> $.result.last_update_result```|
+|Aggiornamenti Risultato ultimo tentativo|Dependent Item|aggiornamento.risultato|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`|```jSONPath -> $.result.last_update_result```|
