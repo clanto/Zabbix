@@ -27,10 +27,28 @@ Non ci sono template collegati
 Non ci sono regole di discovery
 
 ## Macro usate
-Non ci sono macro
+| Macro        | Valore           | Descrizione  |
+| ------------- |:-------------|:-------------|
+|{$CPU.WARNING}|15|Percentuale di attenzione di CPU utilizzata per 5 minuti|
+|{$RAM.WARNING}|5|Percentuale di attenzione di RAM utilizzata per 5 minuti|
+|{$IOREAD.WARNING}|20|Valore di attenzione lettura utilizzato per 5 minuti|
+|{$IOWRITE.WARNING}|20|Valore di attenzione scrittura utilizzato per 5 minuti|
+|{$LATEST.VERSION.ENDPOINT.SECURITY.WARNING}|9.0.2046.0|Ultima versione endpoint security|
+|{$LOG.SPACE.WARNING}|20|Valore in Gb di alert dimensioni per la cartella eScan|
+|{$PROTECT.CONSOLE}|Indirizzo https della console|Indirizzo del proprio portale ESET Protect (facoltativo, non ancora utilizzato)|
 
 ## Grafici
-Utilizzo CPU per i singoli servizi
+Utilizzo CPU per i singoli servizi.
+Utilizzo RAM per i singoli servizi.
+I/O Lettura per i singoli servizi sul disco.
+I/O Scrittura per i singoli servizi sul disco.
+
+## Dashboard
+- Orologio
+- Ultimo Rilevamento
+- Informazioni sul prodotto installato.
+- Stato Protezione
+- Stato Aggiornamenti
 
 ## Elementi Principali Log
 | Nome        | Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
