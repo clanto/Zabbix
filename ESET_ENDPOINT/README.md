@@ -94,9 +94,11 @@ Non ci sono regole di discovery
 |Utilizzo RAM eccessivo servizio ESET (Piu del {$CPU.WARNING}% in 5 minuti)|Il servizio ESET utilizza la RAM oltre la soglia critica stabilita nelle macro per più di 5 minuti|Media|`min(/ESET Endpoint/wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ekrn%'"],5m)>last(/ESET Endpoint/eset.warning.ram.space)`| `Antivirus:ESET` `ESET:Avvisi`|
 
 ## Elementi Componenti
-| Nome        |Descrizione| Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
-| ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|
-|Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo delle minacce di ESET|Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`|
+| Nome        |Descrizione| Tipo|Unità  | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
+| ------------- |:-------------|:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|
+|Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo delle minacce di ESET||Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`|
+|Numero Core Processore|Numero Core del processore per calcolare l'utilizzo CPU dei servizi|Agente Zabbix|Core|```wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"]```|Numero(senza segno)|1d|`Antivirus:ESET` `ESET:Componenti`|
+|RAM Totale Sistema|Memoria RAM in Mb totale del sistema per calcolare l'utilizzo della RAM|Agente Zabbix|Mb|```wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"]```|Numero(float)|1d|`Antivirus:ESET` `ESET:Componenti`|```Trim Destro -> "}]```<br><br>```Espressione Regolare -> ([^"/]+$) -> \0```<br><br>```Javascript -> return (value / 1024 / 1024)```|
 
 ## Elementi Prestazioni
 Questi elementi sono tutti generati in WMI per avere un valore più veritiero possibile senza inficiare sulle performance.
