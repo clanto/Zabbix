@@ -102,6 +102,8 @@ Non ci sono regole di discovery
 |Utilizzo RAM eccessivo servizio ESET (Piu del {$CPU.WARNING}% in 5 minuti)|Il servizio ESET utilizza la RAM oltre la soglia critica stabilita nelle macro per più di 5 minuti|Media|`min(/ESET Endpoint/wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ekrn%'"],5m)>last(/ESET Endpoint/eset.warning.ram.space)`| `Antivirus:ESET` `ESET:Avvisi`|
 
 ## Elementi Componenti
+![componenti](https://user-images.githubusercontent.com/44651109/165174874-e9ec4828-bddd-4fa2-b7ef-fde495ecdb89.PNG)
+
 | Nome        |Descrizione| Tipo|Unità  | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|Formula|
 | ------------- |:-------------|:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|:-----|
 |Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo delle minacce di ESET|Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`||
