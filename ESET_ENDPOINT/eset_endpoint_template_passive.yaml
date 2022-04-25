@@ -1,0 +1,1727 @@
+zabbix_export:
+  version: '5.4'
+  date: '2022-04-25T19:09:45Z'
+  groups:
+    -
+      uuid: 4f154a7b0323444cac18f8fb2b03796f
+      name: antivirus
+  templates:
+    -
+      uuid: d337f21afdea40c1bb066f681a38548e
+      template: 'ESET Endpoint'
+      name: 'ESET Endpoint'
+      groups:
+        -
+          name: antivirus
+      items:
+        -
+          uuid: 6d080b7d3e8a42a4afeb355a43839729
+          name: 'Aggiornamenti Risultato ultimo tentativo'
+          type: DEPENDENT
+          key: aggiornamento.risultato
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.last_update_result
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get update-status]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Aggiornamenti
+        -
+          uuid: 06298da0faa347e9b4941dc8812a92b8
+          name: 'Aggiornamenti ultimo eseguito con successo'
+          type: DEPENDENT
+          key: aggiornamento.riuscito
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.last_successful_update_time
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get update-status]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Aggiornamenti
+        -
+          uuid: 953c1b13a59945b782db036464cc52c8
+          name: 'Aggiornamenti Ultimo Tentativo ESET'
+          type: DEPENDENT
+          key: aggiornamento.tentato
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.last_update_time
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get update-status]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Aggiornamenti
+        -
+          uuid: 8f9ea9643e5840cc8cb388a26e1f971c
+          name: 'Utilizzo CPU (ESET Management Agent) %'
+          type: CALCULATED
+          key: eset.agent.process.percentage
+          value_type: FLOAT
+          units: '%'
+          params: 'last(//wmi.getall["ROOT\CIMV2","SELECT PercentUserTime FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ErAAgent%''"])/last(//wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"])'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+          triggers:
+            -
+              uuid: 407f71ee720d492b990c1ad1ad1b0f39
+              expression: 'min(/ESET Endpoint/eset.agent.process.percentage,5m)>{$CPU.WARNING}'
+              name: 'Utilizzo CPU eccessivo ESET Agent (Piu del {$CPU.WARNING}% in 5 minuti)'
+              priority: AVERAGE
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: 90d9c655f86a42999520aa575defc867
+          name: 'Licenza ESET EDTD ID Publico'
+          type: DEPENDENT
+          key: ESET.licenza.edtd.publicid
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.edtd.public_id
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: 1becefacf3b54ee19f54e7330eb204f9
+          name: 'Licenza ESET EDTD ID Postazione'
+          type: DEPENDENT
+          key: ESET.licenza.edtd.seatid
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.edtd.seat_id
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: 066081b7e5d247ae8582692347bdd944
+          name: 'Licenza ESET EDTD Nome Postazione'
+          type: DEPENDENT
+          key: ESET.licenza.edtd.seat_name
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.edtd.seat_name
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: 0132e80e93a74b908b088fc0a59949f6
+          name: 'Licenza ESET EDTD Stato'
+          type: DEPENDENT
+          key: ESET.licenza.edtd.state
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.edtd.expiration_state
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: 9a5bec75274d4688a62d7d6530e46e40
+          name: 'Licenza ESET EDTD Tipo'
+          type: DEPENDENT
+          key: ESET.licenza.edtd.type
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.edtd.type
+            -
+              type: STR_REPLACE
+              parameters:
+                - FULL_PAID
+                - 'A Pagamento'
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: 99316e1d60864a7887eaf4a10fd09242
+          name: 'Licenza ESET ID Pubblico'
+          type: DEPENDENT
+          key: ESET.licenza.publicID
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.public_id
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: 56c1ac69a03e49fc9d700b7706b303a1
+          name: 'Licenza ESET ID Postazione'
+          type: DEPENDENT
+          key: ESET.licenza.seatID
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.seat_id
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: d6c2890cd9984521aad73c566b712cf1
+          name: 'Licenza ESET Nome Postazione'
+          type: DEPENDENT
+          key: ESET.licenza.seatname
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.seat_name
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: eb02f148457a462f8f6e97e760f952b1
+          name: 'Licenza ESET Stato'
+          type: DEPENDENT
+          key: ESET.licenza.stato
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.expiration_state
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+          triggers:
+            -
+              uuid: 3511df60e8fb4ea98c9fd3b9143d5069
+              expression: 'last(/ESET Endpoint/ESET.licenza.stato)<>"ok"'
+              name: 'Licenza ESET in scadenza'
+              priority: WARNING
+              manual_close: 'YES'
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: 876b533b14444539bd0debf5c30d42bc
+          name: 'Licenza ESET Tipo'
+          type: DEPENDENT
+          key: ESET.licenza.tipo
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.type
+            -
+              type: STR_REPLACE
+              parameters:
+                - PAID
+                - 'A Pagamento'
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Licenza
+        -
+          uuid: 2e9e96533f384874a93a77bd704fbc78
+          name: 'Utilizzo CPU (ESET Service) %'
+          type: CALCULATED
+          key: eset.process.percentage
+          value_type: FLOAT
+          units: '%'
+          params: 'last(//wmi.getall["ROOT\CIMV2","SELECT PercentUserTime FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"])/last(//wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"])'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+          triggers:
+            -
+              uuid: 583f803a8c45413eb3087260f5952412
+              expression: 'min(/ESET Endpoint/eset.process.percentage,5m)>{$CPU.WARNING}'
+              name: 'Utilizzo CPU eccessivo servizio ESET (Piu del {$CPU.WARNING}% in 5 minuti)'
+              priority: AVERAGE
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: 4a35d33501e149c3bdaf860bfaf93e65
+          name: 'Utilizzo CPU (ESET Proxy GUI) %'
+          type: CALCULATED
+          key: eset.proxy.process.percentage
+          value_type: FLOAT
+          units: '%'
+          params: 'last(//wmi.getall["ROOT\CIMV2","SELECT PercentUserTime FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"])/last(//wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"])'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+          triggers:
+            -
+              uuid: 7d21a3ebd96f4d30b7a3dfdb4cb73e6a
+              expression: 'min(/ESET Endpoint/eset.proxy.process.percentage,5m)>{$CPU.WARNING}'
+              name: 'Utilizzo CPU eccessivo ESET Proxy GUI (Piu del {$CPU.WARNING}% in 5 minuti)'
+              priority: AVERAGE
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: 15e4f17250f04175bf1fc212368673e9
+          name: 'Minaccia Rilevamento'
+          type: DEPENDENT
+          key: ESET.Rilevamento
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.virlog.display_name
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+            -
+              type: REGEX
+              parameters:
+                - Rilevamenti
+                - 'Minaccia Rilevata'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+          triggers:
+            -
+              uuid: 76870bf5a3c74b3888e9e36771d5e9bf
+              expression: 'last(/ESET Endpoint/ESET.Rilevamento)="Minaccia Rilevata"'
+              name: 'Minaccia Rilevata'
+              priority: HIGH
+              manual_close: 'YES'
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: 01e15229e5cf47bfb14a35fa3671d5e9
+          name: 'Minaccia Azione Intrapresa'
+          type: DEPENDENT
+          key: ESET.Rilevamento.azioneintrapresa
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].[''Action Taken'']'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: 66e8e9d464714607af1d3935e0fa19b0
+          name: 'Minaccia Circostanza'
+          type: DEPENDENT
+          key: ESET.Rilevamento.circostanza
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].Circumstances'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+            -
+              type: STR_REPLACE
+              parameters:
+                - 'Event occurred during an attempt to access the web.'
+                - 'Rilevato durante l''accesso ad un link.'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: e9f8c2ec31244d00b74a759706616f0e
+          name: 'Minaccia Data e ora Rilevamento'
+          type: DEPENDENT
+          key: ESET.Rilevamento.dataora
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].Time'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: f3142d4cc23241c897a72bfb8477a532
+          name: 'Minaccia Hash'
+          type: DEPENDENT
+          key: ESET.Rilevamento.hash
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].Hash'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: 352362eedc354896956da8b256981d4a
+          name: 'Minaccia Nome'
+          type: DEPENDENT
+          key: ESET.Rilevamento.nomeminaccia
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].[''Threat Name'']'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: 6effe863f9504f13882d267152af5a2d
+          name: 'Minaccia Nome Processo'
+          type: DEPENDENT
+          key: ESET.Rilevamento.nomeprocesso
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].[''Process Name'']'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: 6298113634ad449293f8f6465ecfeee4
+          name: 'Minaccia Tipologia'
+          type: DEPENDENT
+          key: ESET.Rilevamento.tipominaccia
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].[''Threat Type'']'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: 4b092f11e7954d868d16aa00b9e16705
+          name: 'Minaccia URL'
+          type: DEPENDENT
+          key: ESET.Rilevamento.urlminaccia
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].[''Object URI'']'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: 1f63a69fe2554320a2d5dfbcc3978af4
+          name: 'Minaccia Utente Incriminato'
+          type: DEPENDENT
+          key: ESET.Rilevamento.utente
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - '$.result.virlog.logs[0].[''User Name'']'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: 'Nessuna Minaccia'
+          master_item:
+            key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Minaccia
+        -
+          uuid: b5df98fff66c43e59b1c66d906ee6719
+          name: '{$RAM.WARNING}% della RAM totale'
+          type: CALCULATED
+          key: eset.warning.ram.space
+          value_type: FLOAT
+          units: Mb
+          params: '({$RAM.WARNING}/100)*last(//wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"])'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Componenti
+        -
+          uuid: 6b8f9636ad3544acbacd86cb13e5419f
+          name: 'Info Lingua Endpoint ESET'
+          type: DEPENDENT
+          key: info.endpoint.lang
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.lang_id
+            -
+              type: STR_REPLACE
+              parameters:
+                - '1040'
+                - Italiano
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get application-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Info
+        -
+          uuid: c917751e7d5e47d79682c6414eae95e1
+          name: 'Info Prodotto Endpoint ESET'
+          type: DEPENDENT
+          key: prodotto.endpoint
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.description
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get application-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Info
+        -
+          uuid: 0c47c1ff25984b0e9d29e1984d5145fb
+          name: 'Stato del servizio "ekrn" (ESET Service)'
+          key: 'service.info["ekrn",state]'
+          value_type: FLOAT
+          valuemap:
+            name: Servizi
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Servizi
+          triggers:
+            -
+              uuid: b1a6da95b2aa42d1a0e39da3f3c6ce4f
+              expression: 'min(/ESET Endpoint/service.info["ekrn",state],#3)<>0'
+              name: 'Servizio "ESET Service" Non Attivo'
+              priority: DISASTER
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: 650098eca4384e60b8c7a888d11e96bb
+          name: 'Stato del servizio "ekrnEpfw" (ESET Firewall Helper)'
+          key: 'service.info["ekrnEpfw",state]'
+          value_type: FLOAT
+          valuemap:
+            name: Servizi
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Servizi
+          triggers:
+            -
+              uuid: b8b7c2d11a3a4a00ac7dc094c2fc22a5
+              expression: 'min(/ESET Endpoint/service.info["ekrnEpfw",state],#3)<>0'
+              name: 'Servizio "ESET Firewall Helper" Non Attivo'
+              priority: AVERAGE
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: d2c7ebb2cafa4dc4a943fc1f9edbe81a
+          name: 'Stato del servizio "EraAgentSvc" (ESET Management Agent)'
+          key: 'service.info["EraAgentSvc",state]'
+          value_type: FLOAT
+          valuemap:
+            name: Servizi
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Servizi
+          triggers:
+            -
+              uuid: a229a4a325c3474193937b15fcdb9504
+              expression: 'min(/ESET Endpoint/service.info["EraAgentSvc",state],#3)<>0'
+              name: 'Servizio "ESET Management Agent" Non Attivo'
+              priority: DISASTER
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: af480033710c4612b3f76adaa4acba23
+          name: 'Log Info Endpoint ESET'
+          key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get application-info]'
+          delay: 1d
+          trends: '0'
+          value_type: TEXT
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Log
+        -
+          uuid: 2f8586d7dd3a45eab6132d8e29f1185c
+          name: 'Log Licenza Endpoint ESET'
+          key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]'
+          delay: 1d
+          trends: '0'
+          value_type: TEXT
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Log
+        -
+          uuid: 25bd98a5a67f4689898db9e23317c9b7
+          name: 'Log Stato Protezione Endpoint ESET'
+          key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get protection-status]'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.description
+            -
+              type: STR_REPLACE
+              parameters:
+                - 'You are protected'
+                - 'Protezione attiva'
+            -
+              type: STR_REPLACE
+              parameters:
+                - 'Security alert'
+                - 'Protezione Disattivata'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Log
+          triggers:
+            -
+              uuid: 030204a8ce04441682ba96c8feee9b11
+              expression: 'last(/ESET Endpoint/system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get protection-status],#10)<>"Protezione attiva"'
+              name: 'Protezione ESET Disattivata'
+              priority: HIGH
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: a347a675c06c40c599bf450b4f36346a
+          name: 'Log Aggiornamenti Endpoint ESET'
+          key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get update-status]'
+          delay: 10m
+          trends: '0'
+          value_type: TEXT
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Log
+        -
+          uuid: 4ce156316b264a74be6418ae898caa76
+          name: 'Deploy ESET Script'
+          key: 'system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri ''https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1'' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]'
+          delay: 1d
+          trends: '0'
+          value_type: LOG
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Componenti
+        -
+          uuid: 2031d98868384d90be6e06f95d035e9e
+          name: 'Log Minacce ultimi 5 minuti'
+          key: 'system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]'
+          delay: 10s
+          trends: '0'
+          value_type: TEXT
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Log
+        -
+          uuid: 439af774444d4e58bff22e4a7a8c7c56
+          name: 'Info Versione Endpoint ESET'
+          type: DEPENDENT
+          key: versione.endpoint
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.result.version
+          master_item:
+            key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get application-info]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Info
+          triggers:
+            -
+              uuid: 6f79bedb5ad5433197fec1a29292c97d
+              expression: 'last(/ESET Endpoint/versione.endpoint)<>{$LATEST.VERSION.ENDPOINT.SECURITY.WARNING}'
+              name: 'Il prodotto ESET non è aggiornato'
+              priority: WARNING
+        -
+          uuid: d6459fa0062b4182ac99e8261a40f340
+          name: 'Spazio Occupato Log ESET'
+          key: 'vfs.dir.size[C:\ProgramData\ESET\ESET Security\Logs\eScan,,,disk,]'
+          delay: 1d
+          value_type: FLOAT
+          units: Gb
+          preprocessing:
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Componenti
+          triggers:
+            -
+              uuid: 1435da73936c4b1195da2a9999a85121
+              expression: 'last(/ESET Endpoint/vfs.dir.size[C:\ProgramData\ESET\ESET Security\Logs\eScan,,,disk,])>{$LOG.SPACE.WARNING}'
+              name: 'Cartella ESET eScan superiore ai {$LOG.SPACE.WARNING}Gb'
+              priority: WARNING
+              tags:
+                -
+                  tag: Antivirus
+                  value: ESET
+                -
+                  tag: ESET
+                  value: Avvisi
+        -
+          uuid: e1dfcd071abb4ff28e044df255679cef
+          name: 'I/O Lettura (ESET Proxy GUI)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"]'
+          value_type: FLOAT
+          units: Mb/s
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"IOReadOperationsPersec":"'
+            -
+              type: RTRIM
+              parameters:
+                - '","Name":"eguiProxy"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 65e95e811e3d490e8df92a53ce989818
+          name: 'I/O Lettura (ESET Service)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"]'
+          value_type: FLOAT
+          units: Mb/s
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"IOReadOperationsPersec":"'
+            -
+              type: RTRIM
+              parameters:
+                - '","Name":"ekrn"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 65a8641f31ca4ccda0805f2b6c5d64a8
+          name: 'I/O Lettura (ESET Management Agent)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ERAAgent%''"]'
+          value_type: FLOAT
+          units: Mb/s
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"IOReadOperationsPersec":"'
+            -
+              type: RTRIM
+              parameters:
+                - '","Name":"ERAAgent"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: e194d814ce10436384383bfef70b6aa7
+          name: 'I/O Scrittura (ESET Proxy GUI)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT IOWriteOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"]'
+          value_type: FLOAT
+          units: Mb/s
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"IOWriteOperationsPersec":"'
+            -
+              type: RTRIM
+              parameters:
+                - '","Name":"eguiProxy"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: f8e02aa3b032496782516e0c4523df95
+          name: 'I/O Scrittura (ESET Service)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT IOWriteOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"]'
+          value_type: FLOAT
+          units: Mb/s
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"IOWriteOperationsPersec":"'
+            -
+              type: RTRIM
+              parameters:
+                - '","Name":"ekrn"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 9206d9e2c28f423ab7c96e7b7da8c7ef
+          name: 'I/O Scrittura (ESET Management Agent)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT IOWriteOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ERAAgent%''"]'
+          value_type: FLOAT
+          units: Mb/s
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"IOWriteOperationsPersec":"'
+            -
+              type: RTRIM
+              parameters:
+                - '","Name":"ERAAgent"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 61051c01dc09419f84534ae3cd427e5c
+          name: 'Uso CPU grezzo (ESET Proxy GUI)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT PercentUserTime FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"]'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"Name":"eguiProxy","PercentUserTime":"'
+            -
+              type: RTRIM
+              parameters:
+                - '"}]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: f89f6ead29bd4dd09effb67869318fb8
+          name: 'Uso CPU grezzo (ESET Service)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT PercentUserTime FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"]'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"Name":"ekrn","PercentUserTime":"'
+            -
+              type: RTRIM
+              parameters:
+                - '"}]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 4c4ed77023c44cfcba7afc0825308a1e
+          name: 'Uso CPU grezzo (ESET Management Agent)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT PercentUserTime FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ErAAgent%''"]'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"Name":"ERAAgent","PercentUserTime":"'
+            -
+              type: RTRIM
+              parameters:
+                - '"}]'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 8d7317b2e3d34b82bb230996ec6fbf2c
+          name: 'RAM Totale Sistema'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"]'
+          value_type: FLOAT
+          units: Mb
+          preprocessing:
+            -
+              type: RTRIM
+              parameters:
+                - '"}]'
+            -
+              type: REGEX
+              parameters:
+                - '([^"/]+$)'
+                - \0
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Componenti
+        -
+          uuid: c5cb35e2f78f447ca0739984875abfc5
+          name: 'Uso RAM (ESET Proxy GUI)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"]'
+          value_type: FLOAT
+          units: Mb
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"Name":"eguiProxy","WorkingSetPrivate":"'
+            -
+              type: RTRIM
+              parameters:
+                - '"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 5fe268486f5f4ac5b82ffba1dd94a0e2
+          name: 'Uso RAM (ESET Service)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"]'
+          value_type: FLOAT
+          units: Mb
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"Name":"ekrn","WorkingSetPrivate":"'
+            -
+              type: RTRIM
+              parameters:
+                - '"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: 1d7f9d608d924d7cbf299957d41cc3ad
+          name: 'Uso RAM (ESET Management Agent)'
+          key: 'wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ERAAgent%''"]'
+          value_type: FLOAT
+          units: Mb
+          preprocessing:
+            -
+              type: LTRIM
+              parameters:
+                - '[{"Name":"ERAAgent","WorkingSetPrivate":"'
+            -
+              type: RTRIM
+              parameters:
+                - '"}]'
+            -
+              type: JAVASCRIPT
+              parameters:
+                - 'return (value / 1024 / 1024)'
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Prestazioni
+        -
+          uuid: ca2498f91d8941c7bd019580e10e3af2
+          name: 'Numero Core Processore'
+          key: 'wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"]'
+          units: Core
+          tags:
+            -
+              tag: Antivirus
+              value: ESET
+            -
+              tag: ESET
+              value: Componenti
+      tags:
+        -
+          tag: Antivirus
+          value: ESET
+      macros:
+        -
+          macro: '{$CPU.WARNING}'
+          value: '15'
+          description: 'Percentuale di attenzione di CPU utilizzata'
+        -
+          macro: '{$IOREAD.WARNING}'
+          value: '20'
+          description: 'Valore di attenzione lettura utilizzato'
+        -
+          macro: '{$IOWRITE.WARNING}'
+          value: '20'
+          description: 'Valore di attenzione scrittura utilizzato'
+        -
+          macro: '{$LATEST.VERSION.ENDPOINT.SECURITY.WARNING}'
+          value: 9.0.2046.0
+          description: 'Ultima versione endpoint security'
+        -
+          macro: '{$LOG.SPACE.WARNING}'
+          value: '20'
+          description: 'Valore in Gb di attenzione per la cartella eScan'
+        -
+          macro: '{$PROTECT.CONSOLE}'
+          value: 'https://protect.clnt.eu'
+          description: 'Portale Protect'
+        -
+          macro: '{$RAM.WARNING}'
+          value: '5'
+          description: 'Percentuale di attenzione di RAM utilizzata'
+      dashboards:
+        -
+          uuid: 875e72a480674b3e9de0f5c7843717d9
+          name: 'Sicurezza Endpoint'
+          pages:
+            -
+              name: Dashboard
+              widgets:
+                -
+                  type: CLOCK
+                  width: '3'
+                  height: '4'
+                  hide_header: 'YES'
+                -
+                  type: PLAIN_TEXT
+                  name: Aggiornamenti
+                  x: '19'
+                  width: '5'
+                  height: '4'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: INTEGER
+                      name: show_lines
+                      value: '3'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: aggiornamento.risultato
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: aggiornamento.riuscito
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: aggiornamento.tentato
+                        host: 'ESET Endpoint'
+                -
+                  type: GRAPH_CLASSIC
+                  name: 'I/O Lettura ESET'
+                  x: '12'
+                  'y': '9'
+                  width: '12'
+                  height: '4'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        name: 'I/O Lettura Processi ESET'
+                        host: 'ESET Endpoint'
+                -
+                  type: GRAPH_CLASSIC
+                  name: 'I/O Scrittura ESET'
+                  'y': '9'
+                  width: '12'
+                  height: '4'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        name: 'I/O Scrittura Processi ESET'
+                        host: 'ESET Endpoint'
+                -
+                  type: PLAIN_TEXT
+                  name: 'Info Prodotto Installato'
+                  x: '8'
+                  width: '6'
+                  height: '4'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: INTEGER
+                      name: show_lines
+                      value: '6'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: info.endpoint.lang
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: prodotto.endpoint
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: versione.endpoint
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: ESET.licenza.stato
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: ESET.licenza.tipo
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: 'vfs.dir.size[C:\ProgramData\ESET\ESET Security\Logs\eScan,,,disk,]'
+                        host: 'ESET Endpoint'
+                -
+                  type: PLAIN_TEXT
+                  name: Rilevamenti
+                  x: '3'
+                  width: '5'
+                  height: '4'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: INTEGER
+                      name: show_lines
+                      value: '4'
+                    -
+                      type: INTEGER
+                      name: show_as_html
+                      value: '1'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: ESET.Rilevamento
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: ESET.Rilevamento.azioneintrapresa
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: ESET.Rilevamento.nomeminaccia
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: ESET.Rilevamento.nomeprocesso
+                        host: 'ESET Endpoint'
+                -
+                  type: PLAIN_TEXT
+                  name: 'Stato Protezione ESET'
+                  x: '14'
+                  width: '5'
+                  height: '4'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: INTEGER
+                      name: show_lines
+                      value: '4'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: 'service.info["ekrn",state]'
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: 'service.info["ekrnEpfw",state]'
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: 'service.info["EraAgentSvc",state]'
+                        host: 'ESET Endpoint'
+                    -
+                      type: ITEM
+                      name: itemids
+                      value:
+                        key: 'system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get protection-status]'
+                        host: 'ESET Endpoint'
+                -
+                  type: GRAPH_CLASSIC
+                  name: 'Utilizzo CPU'
+                  x: '12'
+                  'y': '4'
+                  width: '12'
+                  height: '5'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        name: 'Utilizzo CPU % ESET'
+                        host: 'ESET Endpoint'
+                -
+                  type: GRAPH_CLASSIC
+                  name: 'Utilizzo RAM ESET'
+                  'y': '4'
+                  width: '12'
+                  height: '5'
+                  hide_header: 'YES'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        name: 'Utilizzo RAM Processi ESET'
+                        host: 'ESET Endpoint'
+      valuemaps:
+        -
+          uuid: 4cac03e6b50744d68d6f2083be229c8f
+          name: Servizi
+          mappings:
+            -
+              value: '0'
+              newvalue: 'In Esecuzione'
+  triggers:
+    -
+      uuid: 4e87fd465f3e467d9a42af166de19922
+      expression: 'min(/ESET Endpoint/wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ERAAgent%''"],5m)>last(/ESET Endpoint/eset.warning.ram.space)'
+      name: 'Utilizzo RAM eccessivo ESET Agent (Piu del {$CPU.WARNING}% in 5 minuti)'
+      priority: AVERAGE
+      tags:
+        -
+          tag: Antivirus
+          value: ESET
+        -
+          tag: ESET
+          value: Avvisi
+    -
+      uuid: c5b5c65e540945d9a2ff93ace82ecc8b
+      expression: 'min(/ESET Endpoint/wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"],5m)>last(/ESET Endpoint/eset.warning.ram.space)'
+      name: 'Utilizzo RAM eccessivo ESET Proxy GUI (Piu del {$CPU.WARNING}% in 5 minuti)'
+      priority: AVERAGE
+      tags:
+        -
+          tag: Antivirus
+          value: ESET
+        -
+          tag: ESET
+          value: Avvisi
+    -
+      uuid: 29cd35f8fc5f48d59156911285ef6af8
+      expression: 'min(/ESET Endpoint/wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"],5m)>last(/ESET Endpoint/eset.warning.ram.space)'
+      name: 'Utilizzo RAM eccessivo servizio ESET (Piu del {$CPU.WARNING}% in 5 minuti)'
+      priority: AVERAGE
+      tags:
+        -
+          tag: Antivirus
+          value: ESET
+        -
+          tag: ESET
+          value: Avvisi
+  graphs:
+    -
+      uuid: 1ea6346a9d104694ac59c517cc5d5f2e
+      name: 'I/O Lettura Processi ESET'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 2774A4
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"]'
+        -
+          sortorder: '2'
+          color: 199C0D
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ERAAgent%''"]'
+        -
+          sortorder: '3'
+          color: F63100
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"]'
+    -
+      uuid: e47d2c7c181a4684aca1f7faea7d48fe
+      name: 'I/O Scrittura Processi ESET'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 199C0D
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT IOWriteOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"]'
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT IOWriteOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ERAAgent%''"]'
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT IOWriteOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"]'
+    -
+      uuid: 5c2338f7f7854a0cbe298f61d48c4c8f
+      name: 'Utilizzo CPU % ESET'
+      ymin_type_1: FIXED
+      graph_items:
+        -
+          sortorder: '1'
+          color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'ESET Endpoint'
+            key: eset.process.percentage
+        -
+          sortorder: '2'
+          color: 0040FF
+          calc_fnc: ALL
+          item:
+            host: 'ESET Endpoint'
+            key: eset.agent.process.percentage
+        -
+          sortorder: '3'
+          color: FF0000
+          calc_fnc: ALL
+          item:
+            host: 'ESET Endpoint'
+            key: eset.proxy.process.percentage
+    -
+      uuid: 0873f7d1e513449d875f487316bf0009
+      name: 'Utilizzo RAM Processi ESET'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ekrn%''"]'
+        -
+          sortorder: '2'
+          color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%ERAAgent%''"]'
+        -
+          sortorder: '3'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: 'ESET Endpoint'
+            key: 'wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like ''%eguiProxy%''"]'
