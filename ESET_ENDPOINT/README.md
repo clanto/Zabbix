@@ -99,7 +99,10 @@ Non ci sono regole di discovery
 |Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo delle minacce di ESET|Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`|
 
 ## Elementi Prestazioni
-Questi elementi sono tutti generati in WMI per avere un valore più veritiero possibile senza inficiare sulle performance
+Questi elementi sono tutti generati in WMI per avere un valore più veritiero possibile senza inficiare sulle performance.
+- Lettura e scrittura del disco per i servizi ESET.
+- Utilizzo CPU per i servizi ESET.
+- Utilizzo RAM per i servizi ESET.
 | Nome        |Descrizione| Tipo           | Chiave  | Tipo di informazione  |Unità| Intervallo| Tag | Preprocesso|
 | ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|:-----|
 |I/O Lettura (ESET Management Agent)|Valori in Mb\s di lettura del disco per il servizio|Agente Zabbix|```wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ERAAgent%'"]```|Numerico(float)|Mb\s|1m|`Antivirus:ESET` `ESET:Prestazioni`|```Trim Sinistro -> [{"IOReadOperationsPersec":"```<br><br>```Trim Destro -> ","Name":"ERAAgent"}]```<br><br>```Javascript -> return (value / 1024 / 1024)```|
