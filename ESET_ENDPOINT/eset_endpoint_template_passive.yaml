@@ -1,6 +1,6 @@
 zabbix_export:
   version: '5.4'
-  date: '2022-04-25T19:09:45Z'
+  date: '2022-04-25T20:32:49Z'
   groups:
     -
       uuid: 4f154a7b0323444cac18f8fb2b03796f
@@ -679,6 +679,7 @@ zabbix_export:
           name: '{$RAM.WARNING}% della RAM totale'
           type: CALCULATED
           key: eset.warning.ram.space
+          delay: 1d
           value_type: FLOAT
           units: Mb
           params: '({$RAM.WARNING}/100)*last(//wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"])'
@@ -744,7 +745,7 @@ zabbix_export:
           key: 'service.info["ekrn",state]'
           value_type: FLOAT
           valuemap:
-            name: Servizi
+            name: 'Stato Servizi'
           tags:
             -
               tag: Antivirus
@@ -771,7 +772,7 @@ zabbix_export:
           key: 'service.info["ekrnEpfw",state]'
           value_type: FLOAT
           valuemap:
-            name: Servizi
+            name: 'Stato Servizi'
           tags:
             -
               tag: Antivirus
@@ -798,7 +799,7 @@ zabbix_export:
           key: 'service.info["EraAgentSvc",state]'
           value_type: FLOAT
           valuemap:
-            name: Servizi
+            name: 'Stato Servizi'
           tags:
             -
               tag: Antivirus
@@ -1213,6 +1214,7 @@ zabbix_export:
           uuid: 8d7317b2e3d34b82bb230996ec6fbf2c
           name: 'RAM Totale Sistema'
           key: 'wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"]'
+          delay: 1d
           value_type: FLOAT
           units: Mb
           preprocessing:
@@ -1318,6 +1320,7 @@ zabbix_export:
           uuid: ca2498f91d8941c7bd019580e10e3af2
           name: 'Numero Core Processore'
           key: 'wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"]'
+          delay: 1d
           units: Core
           tags:
             -
@@ -1587,7 +1590,7 @@ zabbix_export:
       valuemaps:
         -
           uuid: 4cac03e6b50744d68d6f2083be229c8f
-          name: Servizi
+          name: 'Stato Servizi'
           mappings:
             -
               value: '0'
