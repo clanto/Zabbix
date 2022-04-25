@@ -49,6 +49,10 @@ Non ci sono regole di discovery
 - Informazioni sul prodotto installato.
 - Stato Protezione
 - Stato Aggiornamenti
+- Grafico - Utilizzo CPU per i singoli servizi.
+- Grafico - Utilizzo RAM per i singoli servizi.
+- Grafico - I/O Lettura per i singoli servizi sul disco.
+- Grafico - I/O Scrittura per i singoli servizi sul disco.
 
 ## Trigger
 | Nome        |Descrizione|Severity          | Chiave  |Tag|
