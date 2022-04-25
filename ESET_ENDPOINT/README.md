@@ -139,8 +139,15 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 ## Elementi derivati dal log licenza
 | Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
 |:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
-|Licenza ESET Tipo|Dependent Item|ESET.licenza.tipo|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.type```<br><br>```Sostituisci -> PAID -> A Pagamento```|
-|Licenza ESET Stato|Dependent Item|ESET.licenza.stato|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.version```|
-|Licenza ESET Nome Postazione|Dependent Item|ESET.licenza.seatname|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.seat_name```|
-|Licenza ESET ID Pubblico|Dependent Item|ESET.licenza.publicID|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.public_id```|
-|Licenza ESET ID Postazione|Dependent Item|ESET.licenza.seatID|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.seat_id```|
+|Licenza ESET Tipo|Dependent Item|ESET.licenza.tipo|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.type```<br><br>```Sostituisci -> PAID -> A Pagamento```|
+|Licenza ESET Stato|Dependent Item|ESET.licenza.stato|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.version```|
+|Licenza ESET Nome Postazione|Dependent Item|ESET.licenza.seatname|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.seat_name```|
+|Licenza ESET ID Pubblico|Dependent Item|ESET.licenza.publicID|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.public_id```|
+|Licenza ESET ID Postazione|Dependent Item|ESET.licenza.seatID|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.seat_id```|
+|Licenza ESET EDTD Tipo|Dependent Item|ESET.licenza.edtd.type|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.type```<br><br>```Sostituisci -> PAID -> A Pagamento```|
+|Licenza ESET EDTD Stato|Dependent Item|ESET.licenza.edtd.state|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.expiration_state```|
+|Licenza ESET EDTD Nome Postazione|Dependent Item|ESET.licenza.edtd.seat_name|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.seat_name```|
+|Licenza ESET EDTD ID Publico|Dependent Item|ESET.licenza.edtd.publicid|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.public_id```|
+|Licenza ESET EDTD ID Postazione|Dependent Item|ESET.licenza.edtd.seatid|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.seat_id```|
+
+## Elementi derivati dal log minacce
