@@ -54,17 +54,16 @@ Non ci sono regole di discovery
 | Nome        |Descrizione|Severity          | Chiave  |Tag|
 | ------------- |:-------------|:-------------|:-------------|:-------------|
 |Cartella ESET eScan superiore ai {$LOG.SPACE.WARNING}Gb|Invia un alert quando la cartella eScan supera le dimensioni impostate nella Macro|Bassa  |`last(/ESET Endpoint/vfs.dir.size[C:\ProgramData\ESET\ESET Security\Logs\eScan,,,disk,])>{$LOG.SPACE.WARNING}`| `Antivirus:ESET` `ESET:Avvisi`|
-|Il prodotto ESET non è aggiornato|Invia un alert quando esce una nuova versione del prodotto|Bassa  |`
-last(/ESET Endpoint/versione.endpoint)<>{$LATEST.VERSION.ENDPOINT.SECURITY.WARNING}`| `Antivirus:ESET` `ESET:Avvisi`|
+|Il prodotto ESET non è aggiornato|Invia un alert quando esce una nuova versione del prodotto|Bassa  |`last(/ESET Endpoint/versione.endpoint)<>{$LATEST.VERSION.ENDPOINT.SECURITY.WARNING}`| `Antivirus:ESET` `ESET:Avvisi`|
 |Licenza ESET in scadenza|La licenza sta per scadere|Bassa  |`last(/ESET Endpoint/ESET.licenza.stato)<>"ok"`| `Antivirus:ESET` `ESET:Avvisi`|
 |	Minaccia Rilevata|ESET ha rilevato una minaccia|Alta|`last(/ESET Endpoint/ESET.Rilevamento)="Minaccia Rilevata"`| `Antivirus:ESET` `ESET:Avvisi`|
 |Protezione ESET Disattivata|La protezione è stata disattivata|Alta|`last(/ESET Endpoint/system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get protection-status],#10)<>"Protezione attiva"`| `Antivirus:ESET` `ESET:Avvisi`|
 |Servizio "ESET Firewall Helper" Non Attivo|Il servizio Firewall Helper non è attivo|Media|`min(/ESET Endpoint/service.info["ekrnEpfw",state],#3)<>0`| `Antivirus:ESET` `ESET:Avvisi`|
 |Servizio "ESET Management Agent" Non Attivo|Il servizio di Management non è attivo, la console non riesce a comunicare con il client|Disastro|`min(/ESET Endpoint/service.info["EraAgentSvc",state],#3)<>0`| `Antivirus:ESET` `ESET:Avvisi`|
 |Servizio "ESET Service" Non Attivo|Il servizio di protezione ESET non è attivo, il PC non è protetto|Disastro|`min(/ESET Endpoint/service.info["ekrn",state],#3)<>0`| `Antivirus:ESET` `ESET:Avvisi`|
-
-|	Minaccia Rilevata|ESET ha rilevato una minaccia|Alta|`
-last(/ESET Endpoint/ESET.Rilevamento)="Minaccia Rilevata"`| `Antivirus:ESET` `ESET:Avvisi`|
+|Utilizzo CPU eccessivo ESET Agent (Piu del {$CPU.WARNING}% in 5 minuti)|Il servizio ESET Agent utilizza la CPU oltre la soglia critica stabilita nelle macro per più di 5 minuti|Media|`min(/ESET Endpoint/eset.agent.process.percentage,5m)>{$CPU.WARNING}`| `Antivirus:ESET` `ESET:Avvisi`|
+|Utilizzo CPU eccessivo ESET Proxy GUI (Piu del {$CPU.WARNING}% in 5 minuti)|Il servizio ESET Proxy GUI utilizza la CPU oltre la soglia critica stabilita nelle macro per più di 5 minuti|Media|`min(/ESET Endpoint/eset.proxy.process.percentage,5m)>{$CPU.WARNING}`| `Antivirus:ESET` `ESET:Avvisi`|
+|Utilizzo CPU eccessivo servizio ESET (Piu del {$CPU.WARNING}% in 5 minuti)|Il servizio ESET utilizza la CPU oltre la soglia critica stabilita nelle macro per più di 5 minuti|Media|`min(/ESET Endpoint/eset.process.percentage,5m)>{$CPU.WARNING}`| `Antivirus:ESET` `ESET:Avvisi`|
 
 ## Elementi Principali Log
 | Nome        | Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
