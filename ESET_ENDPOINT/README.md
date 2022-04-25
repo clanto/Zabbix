@@ -178,5 +178,7 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Licenza ESET EDTD ID Publico|Dependent Item|ESET.licenza.edtd.publicid|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.public_id```|
 |Licenza ESET EDTD ID Postazione|Dependent Item|ESET.licenza.edtd.seatid|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.seat_id```|
 
-## Elementi derivati dal log minacce
+## Elementi derivati dal log minacce recuperati ogni 10 secondi
+| Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
+|:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
 |Minaccia Rilevamento|Dependent Item|ESET.Rilevamento|`Log Minacce ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:Minaccia`|```jSONPath -> $.result.virlog.display_name```<br><br>```Espressione Regolare -> Rilevamenti -> Minaccia Rilevata```<br><br>Custom fail Set value to `Nessuna Minaccia`|
