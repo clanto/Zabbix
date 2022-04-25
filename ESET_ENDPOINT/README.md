@@ -93,6 +93,17 @@ Non ci sono regole di discovery
 |Utilizzo RAM eccessivo ESET Proxy GUI (Piu del {$CPU.WARNING}% in 5 minuti)|Il servizio ESET Proxy GUI utilizza la RAM oltre la soglia critica stabilita nelle macro per più di 5 minuti|Media|`min(/ESET Endpoint/wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%eguiProxy%'"],5m)>last(/ESET Endpoint/eset.warning.ram.space)`| `Antivirus:ESET` `ESET:Avvisi`|
 |Utilizzo RAM eccessivo servizio ESET (Piu del {$CPU.WARNING}% in 5 minuti)|Il servizio ESET utilizza la RAM oltre la soglia critica stabilita nelle macro per più di 5 minuti|Media|`min(/ESET Endpoint/wmi.getall["ROOT\CIMV2","SELECT WorkingSetPrivate FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ekrn%'"],5m)>last(/ESET Endpoint/eset.warning.ram.space)`| `Antivirus:ESET` `ESET:Avvisi`|
 
+## Elementi Componenti
+| Nome        |Descrizione| Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
+| ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|
+|Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo delle minacce di ESET|Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`|
+
+## Elementi Prestazioni
+Questi elementi sono tutti generati in WMI per avere un valore più veritiero possibile senza inficiare sulle performance
+| Nome        |Descrizione| Tipo           | Chiave  | Tipo di informazione  |Unità| Intervallo| Tag | Preprocesso|
+| ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|:-----|
+|I/O Lettura (ESET Management Agent)|Valori in Mb\s di lettura del disco per il servizio|Agente Zabbix|```wmi.getall["ROOT\CIMV2","SELECT IOReadOperationsPerSec FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ERAAgent%'"]```|Numerico(float)|Mb\s|1m|`Antivirus:ESET` `ESET:Prestazioni`|
+
 ## Elementi Principali Log
 | Nome        | Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
 | ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
