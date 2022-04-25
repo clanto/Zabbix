@@ -40,6 +40,20 @@ Antivirus: ESET
 |{$LOG.SPACE.WARNING}|20|Valore in Gb di alert dimensioni per la cartella eScan|
 |{$PROTECT.CONSOLE}|Indirizzo https della console|Indirizzo del proprio portale ESET Protect (facoltativo, non ancora utilizzato)|
 
+
+## Mappatura Valori
+| Nome        | Valore           | Mappato  |
+| ------------- |:-------------|:-------------|
+|Stato Servizi|0|In Esecuzione|
+|Stato Servizi|1|In Pausa|
+|Stato Servizi|2|In attesa di essere avviato|
+|Stato Servizi|3|In attesa di essere messo in pausa|
+|Stato Servizi|4|In attesa di ripartire|
+|Stato Servizi|5|In attesa di essere fermato|
+|Stato Servizi|6|Fermato|
+|Stato Servizi|7|Sconosciuto|
+|Stato Servizi|255|Il servizio non esiste|
+
 ## Grafici
 ![grafici-eset-zabbix](https://user-images.githubusercontent.com/44651109/165154683-7fa66d9a-2383-447f-a0f9-0c9ada039474.png)
 - Utilizzo CPU per i singoli servizi.
