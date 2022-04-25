@@ -26,6 +26,9 @@ Non ci sono template collegati
 ## Regole di Discovery
 Non ci sono regole di discovery
 
+## Tag
+Antivirus: ESET
+
 ## Macro usate
 | Macro        | Valore           | Descrizione  |
 | ------------- |:-------------|:-------------|
