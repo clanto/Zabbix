@@ -118,6 +118,8 @@ Non ci sono regole di discovery
 |Stato del servizio "EraAgentSvc" (ESET Management Agent)|Stato del servizio|Agente Zabbix||```service.info["EraAgentSvc",state]```|Numero(float)|1m|`Antivirus:ESET` `ESET:Servizi`|Stato Servizi|
 
 ## Elementi Prestazioni
+![prestazioni grezzo](https://user-images.githubusercontent.com/44651109/165174005-d67b1ec6-a85e-4734-a87a-fa15993645d8.PNG)
+
 Questi elementi sono tutti generati in WMI per avere un valore più veritiero possibile senza inficiare sulle performance.
 - Lettura e scrittura del disco per i servizi ESET.
 - Utilizzo CPU per i servizi ESET.
