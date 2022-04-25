@@ -102,5 +102,7 @@ Non ci sono regole di discovery
 |Log Aggiornamenti Endpoint ESET|Agente Zabbix|```system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get update-status]```|Testo|10m|`Antivirus:ESET` `ESET:Log`|
 |Log Minacce ultimi 5 minuti<br><br>All'interno della chiave il valore ```-time_check 5``` equivale ai 5 minuti, si può modificare questo numero ed impostare il numero di minuti per cui si vuole recuperare il log|Agente Zabbix|```system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]```|Testo|10s|`Antivirus:ESET` `ESET:Log`|
 
-## Elementi Principali Componenti
-| Nome        | Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
+## Elementi derivati dal log aggiornamenti
+| Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
+|:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
+|Aggiornamenti Risultato ultimo tentativo|Dependent Item|aggiornamento.risultato|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`| Preprocesso|```jSONPath -> $.result.last_update_result```|
