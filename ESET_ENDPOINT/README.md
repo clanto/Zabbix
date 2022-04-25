@@ -38,10 +38,10 @@ Non ci sono regole di discovery
 |{$PROTECT.CONSOLE}|Indirizzo https della console|Indirizzo del proprio portale ESET Protect (facoltativo, non ancora utilizzato)|
 
 ## Grafici
-Utilizzo CPU per i singoli servizi.
-Utilizzo RAM per i singoli servizi.
-I/O Lettura per i singoli servizi sul disco.
-I/O Scrittura per i singoli servizi sul disco.
+- Utilizzo CPU per i singoli servizi.
+- Utilizzo RAM per i singoli servizi.
+- I/O Lettura per i singoli servizi sul disco.
+- I/O Scrittura per i singoli servizi sul disco.
 
 ## Dashboard
 - Orologio
