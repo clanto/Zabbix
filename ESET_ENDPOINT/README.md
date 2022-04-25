@@ -38,6 +38,7 @@ Non ci sono regole di discovery
 |{$PROTECT.CONSOLE}|Indirizzo https della console|Indirizzo del proprio portale ESET Protect (facoltativo, non ancora utilizzato)|
 
 ## Grafici
+![grafici-eset-zabbix](https://user-images.githubusercontent.com/44651109/165154683-7fa66d9a-2383-447f-a0f9-0c9ada039474.png)
 - Utilizzo CPU per i singoli servizi.
 - Utilizzo RAM per i singoli servizi.
 - I/O Lettura per i singoli servizi sul disco.
