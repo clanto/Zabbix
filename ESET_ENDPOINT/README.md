@@ -50,6 +50,11 @@ Non ci sono regole di discovery
 - Stato Protezione
 - Stato Aggiornamenti
 
+## Trigger
+| Nome        | Severity          | Chiave  |Tag|
+| ------------- |:-------------|:-------------|:-------------|
+|Cartella ESET eScan superiore ai {$LOG.SPACE.WARNING}Gb| Bassa  |`last(/ESET Endpoint/vfs.dir.size[C:\ProgramData\ESET\ESET Security\Logs\eScan,,,disk,])>{$LOG.SPACE.WARNING}`| `Antivirus:ESET` `ESET:Avvisi`|
+
 ## Elementi Principali Log
 | Nome        | Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
 | ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
