@@ -148,6 +148,8 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Uso CPU grezzo (ESET Service)|Valori grezzi di utilizzo della CPU per il servizio|Calculated|```eset.process.percentage```|Numerico(float)|%|1m|`Antivirus:ESET` `ESET:Prestazioni`||```last(//wmi.getall["ROOT\CIMV2","SELECT PercentUserTime FROM Win32_PerfFormattedData_PerfProc_Process where Name like '%ekrn%'"])/last(//wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"])```|
 
 ## Elementi Principali Log
+![log](https://user-images.githubusercontent.com/44651109/165175104-0ad6f245-7be8-4765-b646-799dd327ead1.PNG)
+
 | Nome        | Tipo           | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|
 | ------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
 |Log Info Endpoint ESET|Agente Zabbix|```system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get application-info]```|Testo|1d|`Antivirus:ESET` `ESET:Log`|
@@ -166,6 +168,8 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Aggiornamenti Ultimo Tentativo ESET|Dependent Item|aggiornamento.tentato|`Log Aggiornamenti Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Aggiornamenti`|```jSONPath -> $.result.last_update_time```|
 
 ## Elementi derivati dal log info endpoint
+![info](https://user-images.githubusercontent.com/44651109/165175218-ce517294-19c6-4159-ba2e-2412e3e52a49.png)
+
 | Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
 |:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
 |Info Prodotto Endpoint ESET|Dependent Item|prodotto.endpoint|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.description```|
@@ -173,6 +177,8 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Info Lingua Endpoint ESET|Dependent Item|info.endpoint.lang|`Log Info Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Info`|```jSONPath -> $.result.lang_id```<br><br>```Sostituisci -> 1040 -> Italiano```|
 
 ## Elementi derivati dal log licenza
+![licenza](https://user-images.githubusercontent.com/44651109/165175526-e2850800-9300-4688-a42f-8aa158a9961a.png)
+
 | Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
 |:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
 |Licenza ESET Tipo|Dependent Item|ESET.licenza.tipo|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.type```<br><br>```Sostituisci -> PAID -> A Pagamento```|
