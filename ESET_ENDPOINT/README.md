@@ -27,7 +27,7 @@ Non ci sono template collegati
 Non ci sono regole di discovery
 
 ## Tag
-Antivirus: ESET
+`Antivirus: ESET`
 
 ## Macro usate
 | Macro        | Valore           | Descrizione  |
