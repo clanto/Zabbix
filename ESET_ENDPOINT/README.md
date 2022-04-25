@@ -44,6 +44,7 @@ Non ci sono regole di discovery
 - I/O Scrittura per i singoli servizi sul disco.
 
 ## Dashboard
+
 - Orologio.
 - Ultimo Rilevamento (Data e ora, Tipo di minaccia, Nome minaccia, Azine intrapresa, Link, Nome Processo che ha generato la minaccia).
 - Informazioni sul prodotto installato (Stato licenza, Tipo di licenza, Spazio Occupato dalla cartella eScan, Versione Endpoint, Lingua Endpoint, Software Endpoint).
