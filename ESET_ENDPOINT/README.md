@@ -219,5 +219,4 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |EDTD hash ultimo invio|Dependent Item|eset.edt.hash|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['Hash']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
 |EDTD ora ultimo invio|Dependent Item|eset.edt.time|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['Time']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
 |EDTD percorso ultimo invio|Dependent Item|eset.edtd.object|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.virlog.logs[0].Hash```<br><br>Custom fail Set value to `Nessun invio EDTD`|
-|EDTD utente che ha eseguito il file|Dependent Item|	
-eset.edt.user|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['User Name']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
+|EDTD utente che ha eseguito il file|Dependent Item|eset.edt.user|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['User Name']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
