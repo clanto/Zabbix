@@ -107,7 +107,7 @@ Non ci sono regole di discovery
 
 | Nome        |Descrizione| Tipo|Unità  | Chiave  | Tipo di informazione  | Intervallo| Tag | Preprocesso|Formula|
 | ------------- |:-------------|:-------------|:-------------|:-------------|:-----|:-----|:-----|:-----|:-----|
-|Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo dei log di ESET|Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\checkviruslog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`||
+|Deploy ESET Script|Scarica nella cartella script di Zabbix lo script per il controllo dei log di ESET|Agente Zabbix|```system.run[mkdir C:\PROGRA~1\ZABBIX~1\script & powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/clanto/Zabbix/main/ESET_ENDPOINT/checkviruslog.ps1' -OutFile "$Env:Programfiles\ZABBIX~1\script\alllog.ps1",nowait]```|Log|1d|`Antivirus:ESET` `ESET:Componenti`||
 |Numero Core Processore|Numero Core del processore per calcolare l'utilizzo CPU dei servizi|Agente Zabbix|Core|```wmi.get["root\cimv2","SELECT NumberOfCores from Win32_Processor"]```|Numero(senza segno)|1d|`Antivirus:ESET` `ESET:Componenti`||
 |RAM Totale Sistema|Memoria RAM in Mb totale del sistema per calcolare l'utilizzo della RAM|Agente Zabbix|Mb|```wmi.getall["ROOT\CIMV2","SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"]```|Numero(float)|1d|`Antivirus:ESET` `ESET:Componenti`|```Trim Destro -> "}]```<br><br>```Espressione Regolare -> ([^"/]+$) -> \0```<br><br>```Javascript -> return (value / 1024 / 1024)```||
 |Spazio Occupato Log ESET|Spazio totale occupato dalla cartella eScan di ESET|Agente Zabbix|Gb|```vfs.dir.size[C:\ProgramData\ESET\ESET Security\Logs\eScan,,,disk,]```|Numero(float)|1d|`Antivirus:ESET` `ESET:Componenti`|```Javascript -> return (value / 1024 / 1024)```||
@@ -193,7 +193,7 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Licenza ESET EDTD ID Publico|Dependent Item|ESET.licenza.edtd.publicid|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.public_id```|
 |Licenza ESET EDTD ID Postazione|Dependent Item|ESET.licenza.edtd.seatid|`Log Licenza Endpoint ESET`|Testo|`Antivirus:ESET` `ESET:Licenza`|```jSONPath -> $.result.edtd.seat_id```|
 
-## Elementi derivati dal log minacce recuperati ogni 10 secondi
+## Elementi Minacce Virus (rilevamento ogni 10 secondi)
 ![minaccia](https://user-images.githubusercontent.com/44651109/165173245-693329e6-e3c5-45e9-b7e4-89a540623311.PNG)
 
 | Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
@@ -208,3 +208,16 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Minaccia Tipologia|Dependent Item|ESET.Rilevamento.tipominaccia|`Log Minacce ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:Minaccia`|```jSONPath -> $.result.virlog.logs[0].['Threat Type']```<br><br>Custom fail Set value to `Nessuna Minaccia`|
 |Minaccia URL|Dependent Item|ESET.Rilevamento.urlminaccia|`Log Minacce ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:Minaccia`|```jSONPath -> $.result.virlog.logs[0].['Object URI']```<br><br>Custom fail Set value to `Nessuna Minaccia`|
 |Minaccia Utente Incriminato|Dependent Item|ESET.Rilevamento.utente|`Log Minacce ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:Minaccia`|```jSONPath -> $.result.virlog.logs[0].['User Name']```<br><br>Custom fail Set value to `Nessuna Minaccia`|
+
+## Elementi Minacce EDTD
+![edtd](https://user-images.githubusercontent.com/44651109/165548584-aa50b4bc-34d3-4800-9aa5-3c9631c0f349.jpg)
+
+| Nome        | Tipo           | Chiave  |Master Item|Tipo informazione| Tag | Preprocesso|
+|:------------- |:-------------|:-------------|:-------------|:-----|:-----|:-----|
+|EDTD categoria|Dependent Item|eset.edt.category|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['Category']```<br><br>```Espressione Regolare -> Rilevamenti -> Minaccia Rilevata```<br><br>Custom fail Set value to `Nessun invio EDTD`|
+|EDTD destinazione controllo|Dependent Item|eset.edt.destination|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['Destination']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
+|EDTD hash ultimo invio|Dependent Item|eset.edt.hash|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['Hash']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
+|EDTD ora ultimo invio|Dependent Item|eset.edt.time|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['Time']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
+|EDTD percorso ultimo invio|Dependent Item|eset.edtd.object|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.virlog.logs[0].Hash```<br><br>Custom fail Set value to `Nessun invio EDTD`|
+|EDTD utente che ha eseguito il file|Dependent Item|	
+eset.edt.user|`Log dettagliato ultimi 5 minuti`|Testo|`Antivirus:ESET` `ESET:EDTD`|```jSONPath -> $.result.sent.logs[0].['User Name']```<br><br>Custom fail Set value to `Nessun invio EDTD`|
