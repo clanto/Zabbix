@@ -48,6 +48,7 @@ Non ci sono regole di discovery
 |{$IOWRITE.WARNING}|20|Valore di attenzione scrittura utilizzato per 5 minuti|
 |{$LATEST.VERSION.ENDPOINT.SECURITY.WARNING}|9.0.2046.0|Ultima versione endpoint security|
 |{$LOG.SPACE.WARNING}|20|Valore in Gb di alert dimensioni per la cartella eScan|
+|{$CHECK.LOG}|5|Tempo di check del log|
 |{$PROTECT.CONSOLE}|Indirizzo https della console|Indirizzo del proprio portale ESET Protect (facoltativo, non ancora utilizzato)|
 
 
@@ -156,7 +157,7 @@ Questi elementi sono tutti generati in WMI per avere un valore più veritiero po
 |Log Licenza Endpoint ESET|Agente Zabbix|```system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get license-info]```|Testo|1d|`Antivirus:ESET` `ESET:Log`|
 |Log Stato Protezione Endpoint ESET|Agente Zabbix|```system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get protection-status]```|Testo|1m|`Antivirus:ESET` `ESET:Log`|```JSONPath -> $.result.description```<br><br>```Sostituisci: You are protected -> Protezione attiva```<br><br>```Sostituisci: Security alert -> Protezione Disattivata```|
 |Log Aggiornamenti Endpoint ESET|Agente Zabbix|```system.run[C:\PROGRA~1\ESET\ESETSE~1\eRmm.exe get update-status]```|Testo|10m|`Antivirus:ESET` `ESET:Log`|
-|Log Minacce ultimi 5 minuti<br><br>All'interno della chiave il valore ```-time_check 5``` equivale ai 5 minuti, si può modificare questo numero ed impostare il numero di minuti per cui si vuole recuperare il log|Agente Zabbix|```system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\checkviruslog.ps1" -time_check 5]```|Testo|10s|`Antivirus:ESET` `ESET:Log`|
+|Log dettagliato ultimi {$CHECK.LOG} minuti|Agente Zabbix|```system.run[powershell -NoProfile -ExecutionPolicy bypass -File "C:\PROGRA~1\ZABBIX~1\script\alllog.ps1" -time_check {$CHECK.LOG}]```|Testo|10s|`Antivirus:ESET` `ESET:Log`|
 
 ## Elementi derivati dal log aggiornamenti
 ![aggiornamenti](https://user-images.githubusercontent.com/44651109/165174552-f52cc71e-7a55-409f-8162-b97d60273301.PNG)
